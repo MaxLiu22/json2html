@@ -6,7 +6,7 @@ def readJsonFile(filename):
         target_data = json.load(target_file)
         return target_data
     
-def json2htmlStr(jsonObject):
+def htmlStrComposer(jsonObject):
     subDomExisted = 'children' in jsonObject[0].keys()
     generatedHtml = ''
     generatedStyle = ''
@@ -42,13 +42,10 @@ def json2htmlStr(jsonObject):
         
         childDomContainer = ''
         for subDom in jsonObject[0]['children']:
-            childDomContainer += json2htmlStr(subDom)
+            childDomContainer += htmlStrComposer(subDom)
         generatedHtml += childDomContainer + '</' + tagName + '>'
     
     return generatedHtml
 
-if __name__ == '__main__':
-    target = readJsonFile('./target.json')
-    htmlStr = json2htmlStr(target)
-    print(type(htmlStr))
-    print(htmlStr)
+def json2html(filename):
+    return htmlStrComposer(readJsonFile(filename))
